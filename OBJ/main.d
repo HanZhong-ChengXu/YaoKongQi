@@ -37,3 +37,5 @@
 ..\obj\main.o: ..\MyCode\adc\adc.h
 ..\obj\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
 ..\obj\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+..\obj\main.o: ..\MyCode\can\can.h
+..\obj\main.o: ..\MyCode\WDG\wdg.h

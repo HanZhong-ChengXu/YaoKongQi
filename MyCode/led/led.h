@@ -5,16 +5,15 @@
 
 #define LED_CPU PAout(11)// PA11
 
-#define SouZiDong PBin(13)// PC13
-#define FuWei PBin(14)// PC13
-#define QiSheng PBin(15)// PC13
-#define XiaJiang PAin(8)// PC13
+#define XingZou_OR_ShengJiang PBin(3)// PC13
+#define ZhiXing_OR_XieXing PBin(5)// PC13
+#define XiaJiang PBin(7)// PC13
+#define JiTing PAin(12)// PC13
 
-#define ShiNeng PAin(11)// PC13
-#define JiTing PBin(12)// PC13
+#define KuaiSu_OR_ManSu PBin(4)// PC13
+#define QiSheng PBin(6)// PC13
 #define YaoGan_Key PAin(1)// PC13
 extern void Init_LEDpin(void);
-
 
 #endif
 

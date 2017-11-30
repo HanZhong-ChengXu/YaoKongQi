@@ -6,12 +6,15 @@
 #include "adc.h"
 #include "math.h"
 #include "string.h"
+#include "can.h"
+#include "wdg.h"
 float adc_x,adc_y,adc_z;
 void yaogan_fenxi(void);
 float flagX,flagY,flagZ;
 
 int main(void)
-{		
+{	
+	u8 i=0;	
 	delay_init();	
 	NVIC_Configuration();
 	uart1_init(115200);
@@ -21,21 +24,31 @@ int main(void)
 	DMA_ADC_Configuration();
 	ADC1_Configuration();
 	Init_LEDpin();
-	LED_CPU = 0;
+	IWDG_Init(4,625);    //与分频数为64,重载值为625,溢出时间为1s
+	CAN_Mode_Init(CAN_SJW_1tq,CAN_BS2_8tq,CAN_BS1_9tq,4,0);
+	send();
+	cansend[3] = 0;//清除复位标志
 	while(1)
 	{
 		yaogan_fenxi();
-		delay_ms(20);
+		i++;
+		if(i==50)
+		{
+			IWDG_Feed();
+			LED_CPU = ~LED_CPU;
+			i=0;
+		}
+		delay_ms(10);
 	}
 }
 //Uart1_Send[0]	方向
 //Uart1_Send[1]	速度
-//Uart1_Send[2]	手自动
-//Uart1_Send[3]	故障复位
-//Uart1_Send[4]	起升
-//Uart1_Send[5]	下降
-//Uart1_Send[6]	操作使能
-//Uart1_Send[7]	急停
+//Uart1_Send[2]	行走/升降
+//Uart1_Send[3]	直行/斜行
+//Uart1_Send[4]	下降
+//Uart1_Send[5]	急停
+//Uart1_Send[6]	快速/慢速
+//Uart1_Send[7]	起升
 
 void yaogan_fenxi()
 {
@@ -120,13 +133,14 @@ void yaogan_fenxi()
 			 Uart1_Send[1]  = 0;
 		}
   }
-	Uart1_Send[2] = SouZiDong;
-	Uart1_Send[3] = FuWei;
-	Uart1_Send[4] = QiSheng;
-	Uart1_Send[5] = XiaJiang;
-	Uart1_Send[6] = ShiNeng;
-	Uart1_Send[7] = JiTing;
+	Uart1_Send[2] = XingZou_OR_ShengJiang;
+	Uart1_Send[3] = ZhiXing_OR_XieXing;
+	Uart1_Send[4] = XiaJiang;
+	Uart1_Send[5] = JiTing;
+	Uart1_Send[6] = KuaiSu_OR_ManSu;
+	Uart1_Send[7] = QiSheng;
 	Uart1_Send[8] = YaoGan_Key;
-	Uart1_Start_DMA_Tx(9);	
+	Uart1_Start_DMA_Tx(9);
+	send();
 }
 
