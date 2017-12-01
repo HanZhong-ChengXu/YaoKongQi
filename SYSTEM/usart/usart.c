@@ -1,5 +1,8 @@
 #include "usart.h"	
 #include "dma.h"
+#include "led.h"
+#include "adc.h"
+#include "can.h"
 ////////////////////////////////////////////////////////////////////////////////// 	 
 //如果使用ucos,则包括下面的头文件即可.
 #if SYSTEM_SUPPORT_UCOS
@@ -115,6 +118,114 @@ void uart2_init(u32 bound)
 //	USART_DMACmd(USART2,USART_DMAReq_Tx,ENABLE);//采用DMA方式接收
 	USART_Cmd(USART2, ENABLE); 
 }
+//Uart1_Send[0]	方向
+//Uart1_Send[1]	速度
+//Uart1_Send[2]	行走/升降
+//Uart1_Send[3]	直行/斜行
+//Uart1_Send[4]	下降
+//Uart1_Send[5]	急停
+//Uart1_Send[6]	快速/慢速
+//Uart1_Send[7]	起升
+float adc_x,adc_y,adc_z;
+float flagX,flagY,flagZ;
+u16 anjian_temp;
+void yaogan_fenxi()
+{
+	char x[100],y[100],z[100];
+	float max=145.0,min=105.0;
+	adc_z = After_filter[0]*3.3/4096*100;//Z	
+	adc_y = After_filter[1]*3.3/4096*100;//Y
+	adc_x = After_filter[2]*3.3/4096*100;//X
+	Uart1_Send[2] = XingZou_OR_ShengJiang|(ZhiXing_OR_XieXing<<1)|(XiaJiang<<2)|(JiTing<<3)
+					|(KuaiSu_OR_ManSu<<4)|(QiSheng<<5)|(YaoGan_Key<<6);
+	sprintf(x,"x:%3.f",adc_x);
+	sprintf(y,"y:%3.f",adc_y);
+	sprintf(z,"z:%3.f",adc_z);
+	if(adc_x!=flagX||adc_y!=flagY||adc_z!=flagZ||Uart1_Send[2]!=anjian_temp)
+	{
+		flagX = adc_x;
+		flagY = adc_y;
+		flagZ = adc_z;
+		anjian_temp = Uart1_Send[2];
+		flag.change_flag = 1;
+		//左上
+		if(flagX <min && flagY > max)
+		{
+			 Uart1_Send[0] = 5;
+			 Uart1_Send[1] = (flagY-max)/(197.0-max)*100;
+			 Uart1_Send[1] = (Uart1_Send[1]<=100) ? Uart1_Send[1]:100;
+		}//右上
+		else if(flagX >130 && flagY > max)
+		{
+			 Uart1_Send[0] = 6;
+			 Uart1_Send[1] = (flagY-max)/(188.0-max)*100;
+			 Uart1_Send[1] = (Uart1_Send[1]<=100) ? Uart1_Send[1]:100;
+		}//左下
+		else if(flagX <min && flagY < min)
+		{
+			 Uart1_Send[0] = 7;
+			 Uart1_Send[1] = (min-flagY)/(min-55.0)*100;
+			 Uart1_Send[1] = (Uart1_Send[1]<=100) ? Uart1_Send[1]:100;
+		}//右下
+		else if(flagX >max && flagY < min)
+		{
+			 Uart1_Send[0] = 8;
+			 Uart1_Send[1] = (min-flagY)/(min-55.0)*100;
+			 Uart1_Send[1] = (Uart1_Send[1]<=100) ? Uart1_Send[1]:100;
+		}//左移
+		else if(flagX < min )
+		{
+			 Uart1_Send[0] = 3;
+			 Uart1_Send[1] = (min-flagX)/(min-27.0)*100;
+			 Uart1_Send[1] = (Uart1_Send[1]<=100) ? Uart1_Send[1]:100;
+		 }//右移
+		else if(flagX > max )
+		{
+			 Uart1_Send[0] = 4;
+			 Uart1_Send[1] = (flagX-max)/(223-max)*100;
+			 Uart1_Send[1] = (Uart1_Send[1]<=100) ? Uart1_Send[1]:100;
+
+		}//前进
+		else if(flagY > max)
+		{
+			 Uart1_Send[0] = 1;
+			 Uart1_Send[1] = (flagY-max)/(197-max)*100;
+			 Uart1_Send[1] = (Uart1_Send[1]<=100) ? Uart1_Send[1]:100;
+		}//后退
+		else if(flagY < min)
+		{
+			 Uart1_Send[0] = 2;
+			 Uart1_Send[1] = (min-flagY)/(min-25)*100;
+			 Uart1_Send[1] = (Uart1_Send[1]<=100) ? Uart1_Send[1]:100;
+		}//左旋
+		else if(flagZ < min)
+		{
+			 Uart1_Send[0] = 9;
+			 Uart1_Send[1] = (min-flagZ)/(min-25)*100;
+			 Uart1_Send[1] = (Uart1_Send[1]<=100) ? Uart1_Send[1]:100;
+		}//右旋
+		else if(flagZ > max)
+		{
+			 Uart1_Send[0] = 10;
+			 Uart1_Send[1] = (flagZ-max)/(225-max)*100;
+			 Uart1_Send[1] = (Uart1_Send[1]<=100) ? Uart1_Send[1]:100;
+		}//停止
+		else if((flagX >min && flagX < max)||(flagY >min && flagY < max)||(flagZ >min && flagZ < max))
+		{
+			 Uart1_Send[0] = 0;
+			 Uart1_Send[1]  = 0;
+		}		
+	}
+	else
+	{
+		flag.change_flag = 0;
+	}
+}
+void usart_send(void)
+{
+	if(flag.change_flag ==1)
+	Uart1_Start_DMA_Tx(3);
+}
 u16 USART1_Length = 0,USART2_Length = 0; 
 void USART1_IRQHandler(void)                	//串口1中断服务程序
 {
@@ -128,7 +239,20 @@ void USART1_IRQHandler(void)                	//串口1中断服务程序
         USART1_Length = USART1->DR; 
         USART1_Length = UART_RX_LEN - DMA_GetCurrDataCounter(DMA1_Channel5); 
         DMA1_Channel5->CNDTR = UART_RX_LEN;
-		
+		if((Uart1_Rx[0]==1)&&(Uart1_Rx[1]==1)&&(Uart1_Rx[2]==2))
+		{
+			flag.ShiNeng_flag = 0;
+			LED_CPU = 0;//遥控器有效
+		}
+		else if((Uart1_Rx[0]==1)&&(Uart1_Rx[1]==2)&&(Uart1_Rx[2]==3))
+		{
+			flag.ShiNeng_flag = 1;
+			LED_CPU = 1;//遥控器无效
+		}
+		else if((Uart1_Rx[0]==1)&&(Uart1_Rx[1]==0)&&(Uart1_Rx[2]==1))//主控板复位
+		{
+			Uart1_Start_DMA_Tx(3);
+		}
         DMA_Cmd(DMA1_Channel5, ENABLE);
     }  
 #ifdef OS_TICKS_PER_SEC	 	//如果时钟节拍数定义了,说明要使用ucosII了.

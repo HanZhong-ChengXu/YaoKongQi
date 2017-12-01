@@ -78,7 +78,7 @@ u8 CAN_Mode_Init(u8 tsjw,u8 tbs2,u8 tbs1,u16 brp,u8 mode)
 #endif
 	return 0;
 }   
- 
+deflag flag;
 #if CAN_RX0_INT_ENABLE	//使能RX0中断
 //中断服务函数	
 CanRxMsg RxMessage;
@@ -87,10 +87,27 @@ void USB_LP_CAN1_RX0_IRQHandler(void)
     CAN_Receive(CAN1, 0, &RxMessage);
 	if(RxMessage.StdId == 0x10)
 	{
-		if(RxMessage.Data[2] == 0x55)//主控板复位处理
+		if(RxMessage.Data[3] == 0x55)//主控板复位处理
 		{
 			Can_Send_Msg(cansend,3);
-		}	
+		}
+		if(RxMessage.Data[3] == 0x66)
+		{
+			flag.Can_flag = 1;
+		}
+	}
+	if(RxMessage.StdId == 0x01)
+	{
+		if(RxMessage.Data[2]&0x80)
+		{
+			flag.ShiNeng_flag = 1;
+			LED_CPU = 1;			
+		}
+		else
+		{
+			flag.ShiNeng_flag = 0;
+			LED_CPU = 0;
+		}
 	}
 }
 #endif
@@ -105,7 +122,7 @@ u8 Can_Send_Msg(u8* msg,u8 len)
 	u8 mbox;
 	u16 i=0;
 	CanTxMsg TxMessage;
-	TxMessage.StdId=0x01;	// 标准标识符 
+	TxMessage.StdId=0x02;	// 标准标识符 
 	TxMessage.ExtId=0x12;			// 设置扩展标示符 
 	TxMessage.IDE=CAN_Id_Standard; 	// 标准帧
 	TxMessage.RTR=CAN_RTR_Data;		// 数据帧
@@ -133,18 +150,13 @@ u8 Can_Receive_Msg(u8 *buf)
 	return RxMessage.DLC;	
 }
 u8 canref[2]={0xff,0xff},cansend[4]={0xff,0xff,0xff,0x55};
-void send(void)
+void can_send(void)
 {
-	u8 temp[3];
-	temp[0] = Uart1_Send[0];
-	temp[1] = Uart1_Send[1];
-	temp[2] = XingZou_OR_ShengJiang|(ZhiXing_OR_XieXing<<1)|(XiaJiang<<2)|(JiTing<<3)
-	|(KuaiSu_OR_ManSu<<4)|(QiSheng<<5)|(YaoGan_Key<<6);
-	if(!((temp[0]==cansend[0])&&(temp[1]==cansend[1])&&(temp[2]==cansend[2])))
+	if(flag.change_flag == 1)
 	{
-		cansend[0]=temp[0];
-		cansend[1]=temp[1];
-		cansend[2]=temp[2];
+		cansend[0]=Uart1_Send[0];
+		cansend[1]=Uart1_Send[1];
+		cansend[2]=Uart1_Send[2];
 		Can_Send_Msg(cansend,4);
 	}
 }

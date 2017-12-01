@@ -32,3 +32,6 @@
 ..\obj\usart.o: ..\STM32_FWLIB\inc\stm32f10x_wwdg.h
 ..\obj\usart.o: ..\STM32_FWLIB\inc\misc.h
 ..\obj\usart.o: ..\MyCode\dam\dma.h
+..\obj\usart.o: ..\MyCode\led\led.h
+..\obj\usart.o: ..\MyCode\adc\adc.h
+..\obj\usart.o: ..\MyCode\can\can.h

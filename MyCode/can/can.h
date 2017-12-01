@@ -11,7 +11,13 @@ u8 Can_Send_Msg(u8* msg,u8 len);						//发送数据
 
 u8 Can_Receive_Msg(u8 *buf);							//接收数据
 
-void send(void);
-
+void can_send(void);
+typedef struct
+{
+	u8 ShiNeng_flag;
+	u8 Can_flag;
+	u8 change_flag;
+}deflag;
+extern deflag flag;
 extern u8 cansend[4];
 #endif
