@@ -101,12 +101,12 @@ void USB_LP_CAN1_RX0_IRQHandler(void)
 		if(RxMessage.Data[2]&0x80)
 		{
 			flag.ShiNeng_flag = 1;
-			LED_CPU = 1;			
+			YaoKongJinZhiDeng = 0;			
 		}
 		else
 		{
 			flag.ShiNeng_flag = 0;
-			LED_CPU = 0;
+			YaoKongJinZhiDeng = 1;
 		}
 	}
 }

@@ -11,7 +11,7 @@
 u8 xintiao_buf[4] = {0xff,0xff,0xff,0xff};
 int main(void)
 {	
-	u8 i=0;	
+	u8 i=0,j=0;	
 	delay_init();	
 	NVIC_Configuration();
 	uart1_init(9600);
@@ -30,7 +30,7 @@ int main(void)
 	{		
 		if(flag.ShiNeng_flag == 0)
 		{
-			yaogan_fenxi();			
+  			yaokong_fenxi();			
 			if(flag.Can_flag == 1)
 			{		
 				can_send();					
@@ -38,19 +38,25 @@ int main(void)
 			else
 			{
 				usart_send();
-				LED_CPU = ~LED_CPU;
-			}			
+
+			}
+			j++;
+			if(j==5)
+			{
+				j=0;
+				TongXunZhiShiDeng = ~TongXunZhiShiDeng;				
+			}
 		}
 		i++;
-		if(i==20)
+		if(i==5)
 		{
 			IWDG_Feed();
-//			LED_CPU = ~LED_CPU;
+			LED_CPU = ~LED_CPU;
 			i=0;
 		}
 		flag.Can_flag = 0;
 		Can_Send_Msg(xintiao_buf,4);
-		delay_ms(20);
+		delay_ms(100);
 	}
 }
 

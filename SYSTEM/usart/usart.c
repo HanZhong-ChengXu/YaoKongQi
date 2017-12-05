@@ -129,7 +129,7 @@ void uart2_init(u32 bound)
 float adc_x,adc_y,adc_z;
 float flagX,flagY,flagZ;
 u16 anjian_temp;
-void yaogan_fenxi()
+void yaokong_fenxi()
 {
 	char x[100],y[100],z[100];
 	float max=145.0,min=105.0;
@@ -141,84 +141,124 @@ void yaogan_fenxi()
 	sprintf(x,"x:%3.f",adc_x);
 	sprintf(y,"y:%3.f",adc_y);
 	sprintf(z,"z:%3.f",adc_z);
-	if(adc_x!=flagX||adc_y!=flagY||adc_z!=flagZ||Uart1_Send[2]!=anjian_temp)
+	if(KuaiSu_OR_ManSu == 1)
 	{
-		flagX = adc_x;
-		flagY = adc_y;
-		flagZ = adc_z;
-		anjian_temp = Uart1_Send[2];
-		flag.change_flag = 1;
-		//左上
-		if(flagX <min && flagY > max)
-		{
-			 Uart1_Send[0] = 5;
-			 Uart1_Send[1] = (flagY-max)/(197.0-max)*100;
-			 Uart1_Send[1] = (Uart1_Send[1]<=100) ? Uart1_Send[1]:100;
-		}//右上
-		else if(flagX >130 && flagY > max)
-		{
-			 Uart1_Send[0] = 6;
-			 Uart1_Send[1] = (flagY-max)/(188.0-max)*100;
-			 Uart1_Send[1] = (Uart1_Send[1]<=100) ? Uart1_Send[1]:100;
-		}//左下
-		else if(flagX <min && flagY < min)
-		{
-			 Uart1_Send[0] = 7;
-			 Uart1_Send[1] = (min-flagY)/(min-55.0)*100;
-			 Uart1_Send[1] = (Uart1_Send[1]<=100) ? Uart1_Send[1]:100;
-		}//右下
-		else if(flagX >max && flagY < min)
-		{
-			 Uart1_Send[0] = 8;
-			 Uart1_Send[1] = (min-flagY)/(min-55.0)*100;
-			 Uart1_Send[1] = (Uart1_Send[1]<=100) ? Uart1_Send[1]:100;
-		}//左移
-		else if(flagX < min )
-		{
-			 Uart1_Send[0] = 3;
-			 Uart1_Send[1] = (min-flagX)/(min-27.0)*100;
-			 Uart1_Send[1] = (Uart1_Send[1]<=100) ? Uart1_Send[1]:100;
-		 }//右移
-		else if(flagX > max )
-		{
-			 Uart1_Send[0] = 4;
-			 Uart1_Send[1] = (flagX-max)/(223-max)*100;
-			 Uart1_Send[1] = (Uart1_Send[1]<=100) ? Uart1_Send[1]:100;
-
-		}//前进
-		else if(flagY > max)
-		{
-			 Uart1_Send[0] = 1;
-			 Uart1_Send[1] = (flagY-max)/(197-max)*100;
-			 Uart1_Send[1] = (Uart1_Send[1]<=100) ? Uart1_Send[1]:100;
-		}//后退
-		else if(flagY < min)
-		{
-			 Uart1_Send[0] = 2;
-			 Uart1_Send[1] = (min-flagY)/(min-25)*100;
-			 Uart1_Send[1] = (Uart1_Send[1]<=100) ? Uart1_Send[1]:100;
-		}//左旋
-		else if(flagZ < min)
-		{
-			 Uart1_Send[0] = 9;
-			 Uart1_Send[1] = (min-flagZ)/(min-25)*100;
-			 Uart1_Send[1] = (Uart1_Send[1]<=100) ? Uart1_Send[1]:100;
-		}//右旋
-		else if(flagZ > max)
-		{
-			 Uart1_Send[0] = 10;
-			 Uart1_Send[1] = (flagZ-max)/(225-max)*100;
-			 Uart1_Send[1] = (Uart1_Send[1]<=100) ? Uart1_Send[1]:100;
-		}//停止
-		else if((flagX >min && flagX < max)||(flagY >min && flagY < max)||(flagZ >min && flagZ < max))
-		{
-			 Uart1_Send[0] = 0;
-			 Uart1_Send[1]  = 0;
-		}		
+		KuaiSuDeng = 0;
+		ManSuDeng = 1;
 	}
 	else
 	{
-		flag.change_flag = 0;
+		KuaiSuDeng = 1;
+		ManSuDeng = 0;		
+	}
+	if(XingZou_OR_ShengJiang == 1)//选择行走时
+	{
+		ShengJiangDeng = 1;
+		XingZouDeng = 0;
+		
+		if(adc_x!=flagX||adc_y!=flagY||adc_z!=flagZ||Uart1_Send[2]!=anjian_temp)
+		{
+			flagX = adc_x;
+			flagY = adc_y;
+			flagZ = adc_z;
+			anjian_temp = Uart1_Send[2];
+			flag.change_flag = 1;
+			if(ZhiXing_OR_XieXing == 0)//选择斜行
+			{
+				ZhiXingDeng = 1;
+				XieXingDeng = 0;
+				//左上
+				if(flagX <min && flagY > max)
+				{
+					 Uart1_Send[0] = 5;
+					 Uart1_Send[1] = (flagY-max)/(197.0-max)*100;
+					 Uart1_Send[1] = (Uart1_Send[1]<=100) ? Uart1_Send[1]:100;
+				}//右上
+				else if(flagX >130 && flagY > max)
+				{
+					 Uart1_Send[0] = 6;
+					 Uart1_Send[1] = (flagY-max)/(188.0-max)*100;
+					 Uart1_Send[1] = (Uart1_Send[1]<=100) ? Uart1_Send[1]:100;
+				}//左下
+				else if(flagX <min && flagY < min)
+				{
+					 Uart1_Send[0] = 7;
+					 Uart1_Send[1] = (min-flagY)/(min-55.0)*100;
+					 Uart1_Send[1] = (Uart1_Send[1]<=100) ? Uart1_Send[1]:100;
+				}//右下
+				else if(flagX >max && flagY < min)
+				{
+					 Uart1_Send[0] = 8;
+					 Uart1_Send[1] = (min-flagY)/(min-55.0)*100;
+					 Uart1_Send[1] = (Uart1_Send[1]<=100) ? Uart1_Send[1]:100;
+				}//左移
+				else if(flagX < min )
+				{
+					 Uart1_Send[0] = 3;
+					 Uart1_Send[1] = (min-flagX)/(min-27.0)*100;
+					 Uart1_Send[1] = (Uart1_Send[1]<=100) ? Uart1_Send[1]:100;
+				 }//右移
+				else if(flagX > max )
+				{
+					 Uart1_Send[0] = 4;
+					 Uart1_Send[1] = (flagX-max)/(223-max)*100;
+					 Uart1_Send[1] = (Uart1_Send[1]<=100) ? Uart1_Send[1]:100;
+
+				}//左旋
+				else if(flagZ < min)
+				{
+					 Uart1_Send[0] = 9;
+					 Uart1_Send[1] = (min-flagZ)/(min-25)*100;
+					 Uart1_Send[1] = (Uart1_Send[1]<=100) ? Uart1_Send[1]:100;
+				}//右旋
+				else if(flagZ > max)
+				{
+					 Uart1_Send[0] = 10;
+					 Uart1_Send[1] = (flagZ-max)/(225-max)*100;
+					 Uart1_Send[1] = (Uart1_Send[1]<=100) ? Uart1_Send[1]:100;
+				}//停止
+				else if((flagX >min && flagX < max)||(flagY >min && flagY < max)||(flagZ >min && flagZ < max))
+				{
+					 Uart1_Send[0] = 0;
+					 Uart1_Send[1]  = 0;
+				}			
+			}
+			else//选择直行
+			{
+				ZhiXingDeng = 0;
+				XieXingDeng = 1;
+				//前进
+				if(flagY > max)
+				{
+					 Uart1_Send[0] = 1;
+					 Uart1_Send[1] = (flagY-max)/(197-max)*100;
+					 Uart1_Send[1] = (Uart1_Send[1]<=100) ? Uart1_Send[1]:100;
+				}//后退
+				else if(flagY < min)
+				{
+					 Uart1_Send[0] = 2;
+					 Uart1_Send[1] = (min-flagY)/(min-25)*100;
+					 Uart1_Send[1] = (Uart1_Send[1]<=100) ? Uart1_Send[1]:100;
+				}//停止
+				else if((flagX >min && flagX < max)||(flagY >min && flagY < max)||(flagZ >min && flagZ < max))
+				{
+					 Uart1_Send[0] = 0;
+					 Uart1_Send[1]  = 0;
+				}				
+			}		
+		}
+		else
+		{
+			flag.change_flag = 0;
+		}		
+	}	
+	else//选择升降时停止全向车
+	{
+		ShengJiangDeng = 0;
+		XingZouDeng = 1;
+		
+		Uart1_Send[0] = 0;
+		Uart1_Send[1]  = 0;
 	}
 }
 void usart_send(void)
@@ -242,12 +282,12 @@ void USART1_IRQHandler(void)                	//串口1中断服务程序
 		if((Uart1_Rx[0]==1)&&(Uart1_Rx[1]==1)&&(Uart1_Rx[2]==2))
 		{
 			flag.ShiNeng_flag = 0;
-			LED_CPU = 0;//遥控器有效
+			YaoKongJinZhiDeng = 1;//遥控器有效
 		}
 		else if((Uart1_Rx[0]==1)&&(Uart1_Rx[1]==2)&&(Uart1_Rx[2]==3))
 		{
 			flag.ShiNeng_flag = 1;
-			LED_CPU = 1;//遥控器无效
+			YaoKongJinZhiDeng = 0;//遥控器无效
 		}
 		else if((Uart1_Rx[0]==1)&&(Uart1_Rx[1]==0)&&(Uart1_Rx[2]==1))//主控板复位
 		{
