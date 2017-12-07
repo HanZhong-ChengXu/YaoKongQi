@@ -279,6 +279,8 @@ void USART1_IRQHandler(void)                	//串口1中断服务程序
         USART1_Length = USART1->DR; 
         USART1_Length = UART_RX_LEN - DMA_GetCurrDataCounter(DMA1_Channel5); 
         DMA1_Channel5->CNDTR = UART_RX_LEN;
+		
+		flag.usart_flag = 1;		
 		if((Uart1_Rx[0]==1)&&(Uart1_Rx[1]==1)&&(Uart1_Rx[2]==2))
 		{
 			flag.ShiNeng_flag = 0;
@@ -293,6 +295,7 @@ void USART1_IRQHandler(void)                	//串口1中断服务程序
 		{
 			Uart1_Start_DMA_Tx(3);
 		}
+
         DMA_Cmd(DMA1_Channel5, ENABLE);
     }  
 #ifdef OS_TICKS_PER_SEC	 	//如果时钟节拍数定义了,说明要使用ucosII了.

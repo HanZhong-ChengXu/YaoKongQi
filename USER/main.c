@@ -47,14 +47,40 @@ int main(void)
 				TongXunZhiShiDeng = ~TongXunZhiShiDeng;				
 			}
 		}
+		else
+		{					
+			YaoKongJinZhiDeng=0; 	
+			XingZouDeng=1; 		
+			KuaiSuDeng =1;			
+			ZhiXingDeng =1;		
+			TongXunZhiShiDeng =1; 	
+			GuZhangZhiShiDeng =1;	
+			ShengJiangDeng 	=1;	
+			ManSuDeng =1;			
+			XieXingDeng =1;		
+		}
 		i++;
 		if(i==5)
 		{
 			IWDG_Feed();
 			LED_CPU = ~LED_CPU;
 			i=0;
+			if((flag.Can_flag == 0) && (flag.usart_flag == 0))
+			{
+				flag.ShiNeng_flag = 1;		
+				YaoKongJinZhiDeng=0; 	
+				XingZouDeng=1; 		
+				KuaiSuDeng =1;			
+				ZhiXingDeng =1;		
+				TongXunZhiShiDeng =1; 	
+				GuZhangZhiShiDeng =1;	
+				ShengJiangDeng 	=1;	
+				ManSuDeng =1;			
+				XieXingDeng =1;	
+			}				
+			flag.Can_flag = 0;
+			flag.usart_flag = 0;			
 		}
-		flag.Can_flag = 0;
 		Can_Send_Msg(xintiao_buf,4);
 		delay_ms(100);
 	}

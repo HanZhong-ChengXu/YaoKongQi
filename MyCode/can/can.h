@@ -16,6 +16,7 @@ typedef struct
 {
 	u8 ShiNeng_flag;
 	u8 Can_flag;
+	u8 usart_flag;
 	u8 change_flag;
 }deflag;
 extern deflag flag;

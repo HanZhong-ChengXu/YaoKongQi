@@ -78,7 +78,7 @@ u8 CAN_Mode_Init(u8 tsjw,u8 tbs2,u8 tbs1,u16 brp,u8 mode)
 #endif
 	return 0;
 }   
-deflag flag;
+deflag flag={0,0,0,0};
 #if CAN_RX0_INT_ENABLE	//使能RX0中断
 //中断服务函数	
 CanRxMsg RxMessage;

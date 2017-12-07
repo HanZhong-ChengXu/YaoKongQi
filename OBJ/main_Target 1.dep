@@ -1,5 +1,5 @@
 Dependencies for Project 'main', Target 'Target 1': (DO NOT MODIFY !)
-F (.\main.c)(0x5A264A2F)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I..\USER -I..\CORE -I..\STM32_FWLIB\inc -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\SYSTEM\usart -I..\MyCode\led -I..\MyCode\Buzzer -I..\MyCode\HX711 -I..\MyCode\dam -I..\MyCode\adc -I..\MyCode\can -I..\MyCode\WDG-I D:\GitHub\STM32程序\HanZhong_STM32\YaoKongQi\USER\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\1.0.5\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32F10X_MD -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o ..\obj\main.o --omf_browse ..\obj\main.crf --depend ..\obj\main.d)
+F (.\main.c)(0x5A279508)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I..\USER -I..\CORE -I..\STM32_FWLIB\inc -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\SYSTEM\usart -I..\MyCode\led -I..\MyCode\Buzzer -I..\MyCode\HX711 -I..\MyCode\dam -I..\MyCode\adc -I..\MyCode\can -I..\MyCode\WDG-I D:\GitHub\STM32程序\HanZhong_STM32\YaoKongQi\USER\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\1.0.5\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32F10X_MD -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o ..\obj\main.o --omf_browse ..\obj\main.crf --depend ..\obj\main.d)
 I (stm32f10x.h)(0x565D1846)
 I (..\CORE\core_cm3.h)(0x565D1846)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5475F300)
@@ -33,12 +33,12 @@ I (..\SYSTEM\delay\delay.h)(0x565D1846)
 I (..\SYSTEM\sys\sys.h)(0x58048CD4)
 I (..\SYSTEM\usart\usart.h)(0x5A264A2F)
 I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5475F300)
-I (..\MyCode\led\led.h)(0x5A1FB7C4)
+I (..\MyCode\led\led.h)(0x5A2794EA)
 I (..\MyCode\dam\dma.h)(0x59BC9B4A)
 I (..\MyCode\adc\adc.h)(0x59BC8CB1)
 I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x5475F2FE)
 I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x5475F300)
-I (..\MyCode\can\can.h)(0x5A20B1CC)
+I (..\MyCode\can\can.h)(0x5A2744A3)
 I (..\MyCode\WDG\wdg.h)(0x5051DADA)
 F (.\stm32f10x_it.c)(0x580493C9)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I..\USER -I..\CORE -I..\STM32_FWLIB\inc -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\SYSTEM\usart -I..\MyCode\led -I..\MyCode\Buzzer -I..\MyCode\HX711 -I..\MyCode\dam -I..\MyCode\adc -I..\MyCode\can -I..\MyCode\WDG-I D:\GitHub\STM32程序\HanZhong_STM32\YaoKongQi\USER\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\1.0.5\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32F10X_MD -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o ..\obj\stm32f10x_it.o --omf_browse ..\obj\stm32f10x_it.crf --depend ..\obj\stm32f10x_it.d)
 I (stm32f10x_it.h)(0x565D1846)
@@ -101,8 +101,8 @@ I (..\STM32_FWLIB\inc\stm32f10x_tim.h)(0x565D1846)
 I (..\STM32_FWLIB\inc\stm32f10x_usart.h)(0x565D1846)
 I (..\STM32_FWLIB\inc\stm32f10x_wwdg.h)(0x565D1846)
 I (..\STM32_FWLIB\inc\misc.h)(0x565D1846)
-F (..\MyCode\led\led.c)(0x5A2637CF)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I..\USER -I..\CORE -I..\STM32_FWLIB\inc -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\SYSTEM\usart -I..\MyCode\led -I..\MyCode\Buzzer -I..\MyCode\HX711 -I..\MyCode\dam -I..\MyCode\adc -I..\MyCode\can -I..\MyCode\WDG-I D:\GitHub\STM32程序\HanZhong_STM32\YaoKongQi\USER\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\1.0.5\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32F10X_MD -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o ..\obj\led.o --omf_browse ..\obj\led.crf --depend ..\obj\led.d)
-I (..\MyCode\led\led.h)(0x5A1FB7C4)
+F (..\MyCode\led\led.c)(0x5A27434F)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I..\USER -I..\CORE -I..\STM32_FWLIB\inc -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\SYSTEM\usart -I..\MyCode\led -I..\MyCode\Buzzer -I..\MyCode\HX711 -I..\MyCode\dam -I..\MyCode\adc -I..\MyCode\can -I..\MyCode\WDG-I D:\GitHub\STM32程序\HanZhong_STM32\YaoKongQi\USER\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\1.0.5\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32F10X_MD -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o ..\obj\led.o --omf_browse ..\obj\led.crf --depend ..\obj\led.d)
+I (..\MyCode\led\led.h)(0x5A2794EA)
 I (..\SYSTEM\sys\sys.h)(0x58048CD4)
 I (..\USER\stm32f10x.h)(0x565D1846)
 I (..\CORE\core_cm3.h)(0x565D1846)
@@ -195,8 +195,8 @@ I (..\STM32_FWLIB\inc\stm32f10x_usart.h)(0x565D1846)
 I (..\STM32_FWLIB\inc\stm32f10x_wwdg.h)(0x565D1846)
 I (..\STM32_FWLIB\inc\misc.h)(0x565D1846)
 I (..\MyCode\dam\dma.h)(0x59BC9B4A)
-F (..\MyCode\can\can.c)(0x5A24A269)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I..\USER -I..\CORE -I..\STM32_FWLIB\inc -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\SYSTEM\usart -I..\MyCode\led -I..\MyCode\Buzzer -I..\MyCode\HX711 -I..\MyCode\dam -I..\MyCode\adc -I..\MyCode\can -I..\MyCode\WDG-I D:\GitHub\STM32程序\HanZhong_STM32\YaoKongQi\USER\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\1.0.5\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32F10X_MD -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o ..\obj\can.o --omf_browse ..\obj\can.crf --depend ..\obj\can.d)
-I (..\MyCode\can\can.h)(0x5A20B1CC)
+F (..\MyCode\can\can.c)(0x5A2753C8)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I..\USER -I..\CORE -I..\STM32_FWLIB\inc -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\SYSTEM\usart -I..\MyCode\led -I..\MyCode\Buzzer -I..\MyCode\HX711 -I..\MyCode\dam -I..\MyCode\adc -I..\MyCode\can -I..\MyCode\WDG-I D:\GitHub\STM32程序\HanZhong_STM32\YaoKongQi\USER\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\1.0.5\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32F10X_MD -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o ..\obj\can.o --omf_browse ..\obj\can.crf --depend ..\obj\can.d)
+I (..\MyCode\can\can.h)(0x5A2744A3)
 I (..\SYSTEM\sys\sys.h)(0x58048CD4)
 I (..\USER\stm32f10x.h)(0x565D1846)
 I (..\CORE\core_cm3.h)(0x565D1846)
@@ -226,7 +226,7 @@ I (..\STM32_FWLIB\inc\stm32f10x_tim.h)(0x565D1846)
 I (..\STM32_FWLIB\inc\stm32f10x_usart.h)(0x565D1846)
 I (..\STM32_FWLIB\inc\stm32f10x_wwdg.h)(0x565D1846)
 I (..\STM32_FWLIB\inc\misc.h)(0x565D1846)
-I (..\MyCode\led\led.h)(0x5A1FB7C4)
+I (..\MyCode\led\led.h)(0x5A2794EA)
 I (..\SYSTEM\delay\delay.h)(0x565D1846)
 I (..\SYSTEM\usart\usart.h)(0x5A264A2F)
 I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5475F300)
@@ -558,7 +558,7 @@ I (..\STM32_FWLIB\inc\stm32f10x_tim.h)(0x565D1846)
 I (..\STM32_FWLIB\inc\stm32f10x_usart.h)(0x565D1846)
 I (..\STM32_FWLIB\inc\stm32f10x_wwdg.h)(0x565D1846)
 I (..\STM32_FWLIB\inc\misc.h)(0x565D1846)
-F (..\SYSTEM\usart\usart.c)(0x5A264B1D)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I..\USER -I..\CORE -I..\STM32_FWLIB\inc -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\SYSTEM\usart -I..\MyCode\led -I..\MyCode\Buzzer -I..\MyCode\HX711 -I..\MyCode\dam -I..\MyCode\adc -I..\MyCode\can -I..\MyCode\WDG-I D:\GitHub\STM32程序\HanZhong_STM32\YaoKongQi\USER\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\1.0.5\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32F10X_MD -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o ..\obj\usart.o --omf_browse ..\obj\usart.crf --depend ..\obj\usart.d)
+F (..\SYSTEM\usart\usart.c)(0x5A274602)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I..\USER -I..\CORE -I..\STM32_FWLIB\inc -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\SYSTEM\usart -I..\MyCode\led -I..\MyCode\Buzzer -I..\MyCode\HX711 -I..\MyCode\dam -I..\MyCode\adc -I..\MyCode\can -I..\MyCode\WDG-I D:\GitHub\STM32程序\HanZhong_STM32\YaoKongQi\USER\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\1.0.5\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32F10X_MD -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o ..\obj\usart.o --omf_browse ..\obj\usart.crf --depend ..\obj\usart.d)
 I (..\SYSTEM\usart\usart.h)(0x5A264A2F)
 I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5475F300)
 I (..\SYSTEM\sys\sys.h)(0x58048CD4)
@@ -591,6 +591,6 @@ I (..\STM32_FWLIB\inc\stm32f10x_usart.h)(0x565D1846)
 I (..\STM32_FWLIB\inc\stm32f10x_wwdg.h)(0x565D1846)
 I (..\STM32_FWLIB\inc\misc.h)(0x565D1846)
 I (..\MyCode\dam\dma.h)(0x59BC9B4A)
-I (..\MyCode\led\led.h)(0x5A1FB7C4)
+I (..\MyCode\led\led.h)(0x5A2794EA)
 I (..\MyCode\adc\adc.h)(0x59BC8CB1)
-I (..\MyCode\can\can.h)(0x5A20B1CC)
+I (..\MyCode\can\can.h)(0x5A2744A3)
